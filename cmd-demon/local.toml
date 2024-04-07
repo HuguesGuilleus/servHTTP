@@ -1,0 +1,7 @@
+log = "/tmp/"
+
+[mux.":8000"]
+h."/" = { t = "f", u = "." }
+h."/p/" = { t = "p", u = "https://example.org/" }
+h."/r/" = { t = "r", u = "https://example.org/dir/" }
+h."/s" = { t = "s" }

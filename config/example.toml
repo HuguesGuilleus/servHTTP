@@ -1,0 +1,19 @@
+log = "/var/log/servHTTP/"
+
+[mux.":80"]
+h."/" = { t = "s" }
+h."/.well-known/" = { t = "f", u = "/var/letsencrypt/" }
+
+[[mux.":443".cert]]
+root = "/etc/lego/certificates/"
+key = "example.com.key"
+crt = "example.com.crt"
+
+[[mux.":443".cert]]
+root = "/etc/lego/certificates/"
+key = "example.org.key"
+crt = "example.org.crt"
+
+[mux.":443".h]
+"example.com/" = { t = "f", u = "/var/www/example.com/", c = "max-age=60" }
+"example.org/" = { t = "f", u = "/var/www/example.org/", c = "max-age=60" }

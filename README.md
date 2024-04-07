@@ -1,55 +1,37 @@
-# servHTTP.v2
+# Server HTTP
 
-My very simple web server.
-
-# Installation
-
-```bash
-curl https://raw.githubusercontent.com/HuguesGuilleus/servHTTP.v2/master/install.bash | bash -s
-```
+A basic server for develop or as demon.
 
 # Configuration
-File `/etc/servHTTP.ini` or the first args.
 
-## General
-```ini
-; The log directory, each day a new file a created.
-log = /var/log/servHTTP/
-; disable the TLS listen and load certificates, use it when you don't have them.
-notls = false
-addr = :80
-addrtls = :443
-chalenge = /var/letsencrypt
-```
+File `/etc/servHTTP.toml` or the first args.
 
+```toml
+# A log directory.
+log = "/var/log/servHTTP/"
 
-## Certificate
-```ini
-[!cert.xxx]
-key = ...
-crt = ...
-```
+# Each handlers have a type:
+# - f => file
+# - m => cache
+# - r => redirect
+# - s => secure (redirect to https)
+# - p => reverse proxy
+[mux.":443".h]
+"example.org/" = { t = "r", u = "https://www.example.org/" }
+"www.example.org/" = { t = "f", u = "www root...", c = "max-age=60" }
+"www.example.org/assets/" = { t = "m", u = "www assets...", c = "max-age=3600, immutable" }
+"www.example.org/api/" = { t = "p", u = "http://localhost:8000" },
 
-## Host
-```ini
-; File handler
-[www.example.com]
-; Two option for static file handler
-/ = /var/www/
-/ = file /var/www/
-; you can define directory index template. I't Go HTML template that is executed
-; on a slice of os.FileInfo
-index = /path/to/template
+# Define certificate directory and file.
+[[mux.":443".cert]]
+root = "/etc/lego/certificates/"
+# The crt and key are added to the root.
+crt = "example.org.crt"
+key = "example.org.key"
 
-; redirect handler
-[example.com]
-/ = redirect https://www.example.com
-
-; Reverse proxy handler (work with web socket)
-[reverse.example.com]
-/ = reverse http://localhost:3000
-
-; You can also define for each host, specific page for error
-e404 = /path/to/error
-e502 = /path/to/error
+# Define each handlers for each port
+# Because no [[mux.":80".cert]], do no activate TLS.
+[mux.":80".h]
+"/" = { t = "s" }
+"/.well-known/" = { t = "f", u = "/var/letsencrypt/" }
 ```

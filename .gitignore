@@ -1,3 +1,5 @@
-servHTTP.v2
-servHTTP.v2.exe
-.release
+cmd-demon/cmd-demon
+cmd-demon/cmd-demon.exe
+
+cmd-dev/cmd-dev
+cmd-dev/cmd-dev.exe

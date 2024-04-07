@@ -1,0 +1,7 @@
+<script>
+	(async (q = (t, f) => document.querySelectorAll(t).forEach(f), P = "previousElementSibling", H = "hidden", T = "innerText") => {
+		q("time", t => t[T] = new Date(t.dateTime).toLocaleString());
+		s.oninput = _ => q("#f>a", a => a[P][P][H] = a[P][H] = a[H] = !a[T].includes(s.value));
+		if (r && r[T]) r[T] = await (await fetch(r[T])).text()
+	})();
+</script>

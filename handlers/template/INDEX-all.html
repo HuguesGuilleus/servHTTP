@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+	<meta charset=utf-8>
+	<meta name=viewport content="width=device-width,initial-scale=0.5">
+	<title>Index</title>
+	<style>
+		body {
+			margin: 1rem;
+			font-family: monospace;
+			font-size: xx-large;
+			background: #eae5dc;
+		}
+
+		nav {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			grid-gap: 1rem;
+			margin: 1rem 0;
+		}
+
+		h1,
+		nav>* {
+			margin: 0;
+			display: table;
+			padding: 0.2em 0.5em;
+			background: #FFF;
+		}
+
+		input {
+			width: 100%;
+			border: none;
+			font: inherit;
+		}
+
+		a,
+		input {
+			color: #06C;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: #00B;
+			text-decoration: underline;
+		}
+
+		#f {
+			display: grid;
+			grid-template-columns: auto auto 1fr;
+			grid-gap: 0 1rem;
+		}
+
+		time,
+		#f>div {
+			color: #0009;
+		}
+
+		#f>div {
+			text-align: right;
+		}
+
+		time::before {
+			content: "[";
+		}
+
+		time::after {
+			content: "]";
+		}
+
+		pre {
+			white-space: pre-wrap;
+		}
+	</style>
+
+</head>
+
+<body>
+	<h1>Index</h1>
+	<nav>
+		<div id=p><a href="/">/</a><a href="/config/">config/</a><a href="">file.txt</a></div>
+		<input type=search id=s placeholder=Search autofocus>
+	</nav>
+	<div id=f>
+
+		<br>
+		<!-- <span></span> -->
+		<!-- <time datetime="2023-12-02T12:23:25Z">time</time> -->
+		<div>-</div>
+		<a href="cmd-demon/">cmd-demon/</a>
+
+		<time datetime="2023-12-02T12:23:25Z">time</time>
+		<div>279 279 279 B</div>
+		<a href="file.txt">file.txt</a>
+
+	</div>
+
+	<pre id=r>README.md</pre>
+	<!-- <pre id=r></pre> -->
+
+	<script>
+		(async (q = (t, f) => document.querySelectorAll(t).forEach(f), P = "previousElementSibling", H = "hidden", T = "innerText") => {
+			q("time", t => t[T] = new Date(t.dateTime).toLocaleString());
+			s.oninput = _ => q("#f>a", a => a[P][P][H] = a[P][H] = a[H] = !a[T].includes(s.value));
+			if (r[T]) r[T] = await (await fetch(r[T])).text()
+		})();
+	</script>
